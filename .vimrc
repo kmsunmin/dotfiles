@@ -9,6 +9,9 @@ let g:vimtex_view_mode='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
+
+" to auto complete brackets
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Syntax color on
@@ -18,7 +21,7 @@ set background=dark
 " Color theme for vim
 colorscheme gruvbox 
 " Enable mouse usage
-set mouse=a
+set mouse=a 
 " Set tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 " Enable line number
@@ -31,4 +34,11 @@ set hlsearch
 set autoindent
 " A color line column
 set colorcolumn=72
+
+" Autopair
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsshortcutFastWrap = ''
+let g:AutoPairsShortcutJump = ''
+let g:AutoPairsShortcutBackInsert = ''
 
