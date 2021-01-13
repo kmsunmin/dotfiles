@@ -12,6 +12,9 @@ let g:tex_conceal='abdmg'
 
 " to auto complete brackets
 Plug 'jiangmiao/auto-pairs'
+
+" Vim wiki
+Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 call plug#end()
 
 " Syntax color on
@@ -41,4 +44,8 @@ let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsshortcutFastWrap = ''
 let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = ''
+
+" Vimwiki setting
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
