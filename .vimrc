@@ -13,7 +13,8 @@ let g:tex_conceal='abdmg'
 
 " to auto complete brackets
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
 " Vim wiki
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 call plug#end()
