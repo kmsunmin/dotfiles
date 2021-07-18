@@ -1,20 +1,22 @@
 set nocompatible
 set t_Co=256
+set hidden
 
 " Plugins
 call plug#begin('~/.vim/plugged')
 " to use LaTex on vim
 Plug 'lervag/vimtex' 
-let g:tex_flavor='latex'
-let g:vimtex_view_mode='zathura'
-let g:vimtex_quickfix_mode=0
-set conceallevel=1
-let g:tex_conceal='abdmg'
-
 " to auto complete brackets
 Plug 'jiangmiao/auto-pairs'
+" to search files
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
+" color scheme
+Plug 'junegunn/seoul256.vim'
+" distraction-free mode
+Plug 'junegunn/goyo.vim'
+" hyperfocus-writing mode
+Plug 'junegunn/limelight.vim'
 " Vim wiki
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
 call plug#end()
@@ -24,18 +26,18 @@ syntax on
 " Enables syntax highlighting and changes colorscheme
 set background=dark
 " Color theme for vim
-colorscheme gruvbox 
+colorscheme seoul256
 " Enable mouse usage
 set mouse=a 
 " Set tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
-" Enable line number
-set number
+" Enable line number and relative line number
+set relativenumber number
 " Encoding type
 set encoding=utf-8
 " Enable highlight search
 set hlsearch
-" Use auto indentation
+"Use auto indentation
 set autoindent
 " A color line column
 set colorcolumn=72
@@ -50,4 +52,19 @@ let g:AutoPairsShortcutBackInsert = ''
 " Vimwiki setting
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+
+" Vimtex setting
+let g:tex_flavor='latex'
+let g:vimtex_view_mode='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
+" Setup grepprg so :grep uses ripgrep
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
+" Map keys to use fzf and Rg faster
+nnoremap <silent> <C-f> :Files<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <esc><esc> :noh<return><esc>
 
