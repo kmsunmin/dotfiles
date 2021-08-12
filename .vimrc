@@ -28,7 +28,7 @@ set background=dark
 " Color theme for vim
 colorscheme seoul256
 " Enable mouse usage
-set mouse=a 
+set mouse=a
 " Set tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 " Enable line number and relative line number
@@ -67,4 +67,21 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <esc><esc> :noh<return><esc>
+
+" Set leader prefix for mapping
+let mapleader = ','
+" Set local leader prefix for mapping
+let maplocalleader = '\\'
+" Delete the current line, then paste it below the one we're on now
+nnoremap <Leader> ddp
+" Delete the current line, then paste it above the one we're on now
+nnoremap _ ddkP
+" Convert the current word to uppercase when you're in insert mode
+inoremap <c-u> <esc>viwU
+" Uppercase the current word in normal mode
+nnoremap <c-u> viwU
+" Open vimrc file in a vertical split for quick editing
+nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
+" Source vimrc file
+nnoremap <Leader>sv :source $MYVIMRC<cr>
 
