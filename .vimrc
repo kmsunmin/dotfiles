@@ -84,4 +84,14 @@ nnoremap <c-u> viwU
 nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
 " Source vimrc file
 nnoremap <Leader>sv :source $MYVIMRC<cr>
+" Surround current word with double quotes
+nnoremap <Leader>" viw<esc>a"<esc>bi"<esc>lel
+" Surround current word with single quotes
+nnoremap <Leader>' viw<esc>a'<esc>bi'<esc>lel
+" Go to the beginning of the current line
+nnoremap H 0
+" Go to the end of the current line
+nnoremap L $
+" Exit insert mode
+inoremap jk <esc>
 
