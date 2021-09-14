@@ -19,6 +19,8 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 " Vim wiki
 Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+" Vim startify
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 " Syntax color on
@@ -50,15 +52,33 @@ let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = ''
 
 " Vimwiki setting
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [
+    \{
+    \    'path': '~/Study/kmsunmin.github.io/_wiki/',
+    \    'syntax': 'markdown', 'ext': '.md',
+    \},
+    \{
+    \    'path': '~/Documents/personal_wiki',
+    \    'ext': '.md',
+    \},
+\]
+let g:vimwiki_conceallevel = 0
+" To not recognize other markdown files as vimwiki files
+let g:vimwiki_global_ext = 0
 
 " Vimtex setting
 let g:tex_flavor='latex'
 let g:vimtex_view_mode='zathura'
 let g:vimtex_quickfix_mode=0
-set conceallevel=1
+set conceallevel=0
 let g:tex_conceal='abdmg'
+
+" vim-startify setting
+let g:startify_bookmarks = [
+    \{
+    \'w': '~/Study/kmsunmin.github.io/_wiki'
+    \},
+\]
 
 " Setup grepprg so :grep uses ripgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
@@ -71,7 +91,7 @@ nnoremap <esc><esc> :noh<return><esc>
 " Set leader prefix for mapping
 let mapleader = ','
 " Set local leader prefix for mapping
-let maplocalleader = '\\'
+let maplocalleader = '\'
 " Delete the current line, then paste it below the one we're on now
 nnoremap <Leader> ddp
 " Delete the current line, then paste it above the one we're on now
