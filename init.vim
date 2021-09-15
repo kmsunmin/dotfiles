@@ -1,4 +1,3 @@
-" plugins
 call plug#begin('~/.vim/plugged')
     " to search files 
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
@@ -19,12 +18,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', {
         \'branch': 'release'
 	\}
-    " syntastic for status bar 
-    Plug 'vim-syntastic/syntastic' 
-    " file viewer 
+    " syntastic for status bar
+    Plug 'vim-syntastic/syntastic'
+    " file viewer
     Plug 'preservim/nerdtree'
     " auto pairing
     Plug 'jiangmiao/auto-pairs'
+    " colorschemes
+    Plug 'flazz/vim-colorschemes'
 call plug#end()
 
 " theme
@@ -45,7 +46,7 @@ set laststatus=2    " status bar always on
 set cursorline      " highlight current line
 set showmatch       " display matching brackets
 set background=dark
-colorscheme seoul256
+colorscheme wombat
 
 " no swp, backup files
 set noswapfile
@@ -68,7 +69,7 @@ set autoread
     \ endif
 
 " status line
-" Syntastic 설정
+" Syntastic setting
 " https://thechefprogrammer.blogspot.kr/2014/05/syntax-check-for-php-and-javascript.html
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -117,14 +118,12 @@ let g:startify_bookmarks = [
 \]
 
 let g:startify_list_order = [
-    \ ['  Bookmarks'], 
-    \ 'bookmarks',
     \ ['  Most Recently Used Files'],
     \ 'files'
 \]
 
 " NERDTree mappings 
-nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <Leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 
@@ -132,3 +131,6 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <esc><esc> :noh<return><esc>
+
+" edit init.vim
+nnoremap <Leader>ev :vsplit<space>~/.config/nvim/init.vim
