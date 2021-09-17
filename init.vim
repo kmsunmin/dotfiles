@@ -98,13 +98,9 @@ let g:AutoPairsShortcutBackInsert = ''
 " Vimwiki setting
 let g:vimwiki_list = [
     \{ 
-    \    'path': '~/Study/kmsunmin.github.io/_wiki/',
+    \    'path': '~/Study/kmsunmin.github.io/_posts/',
     \    'syntax': 'markdown', 'ext': '.md',
-    \},
-    \{
-    \    'path': '~/Documents/personal_wiki',
-    \    'ext': '.md',
-    \},
+    \}
 \]
 let g:vimwiki_conceallevel = 0
 " To not recognize other markdown files as vimwiki files
@@ -113,11 +109,14 @@ let g:vimwiki_global_ext = 0
 " vim-startify setting
 let g:startify_bookmarks = [
     \{
-    \'w': '~/Study/kmsunmin.github.io/_wiki'
+    \'w': '~/Study/kmsunmin.github.io/_posts/'
     \},
+    \{
 \]
 
 let g:startify_list_order = [
+    \ [' Bookmarks'],
+    \ 'bookmarks',
     \ ['  Most Recently Used Files'],
     \ 'files'
 \]
@@ -133,4 +132,6 @@ nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <esc><esc> :noh<return><esc>
 
 " edit init.vim
-nnoremap <Leader>ev :vsplit<space>~/.config/nvim/init.vim
+nnoremap <Leader>ev :vsplit<space>~/.config/nvim/init.vim<CR>
+" source init.vim
+nnoremap <Leader>sv :source $MYVIMRC<CR>
