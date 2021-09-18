@@ -111,7 +111,6 @@ let g:startify_bookmarks = [
     \{
     \'w': '~/Study/kmsunmin.github.io/_posts/'
     \},
-    \{
 \]
 
 let g:startify_list_order = [
