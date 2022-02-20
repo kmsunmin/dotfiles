@@ -26,7 +26,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'jiangmiao/auto-pairs'
     " colorschemes
     Plug 'flazz/vim-colorschemes'
-call plug#end()
+    " vim plugin for git
+    Plug 'tpope/vim-fugitive'
+    call plug#end()
 
 " theme
 syntax enable
@@ -97,10 +99,6 @@ let g:AutoPairsShortcutBackInsert = ''
 
 " Vimwiki setting
 let g:vimwiki_list = [
-    \{ 
-    \    'path': '~/Study/kmsunmin.github.io/_posts/',
-    \    'syntax': 'markdown', 'ext': '.md',
-    \}
 \]
 let g:vimwiki_conceallevel = 0
 " To not recognize other markdown files as vimwiki files
@@ -108,9 +106,6 @@ let g:vimwiki_global_ext = 0
 
 " vim-startify setting
 let g:startify_bookmarks = [
-    \{
-    \'w': '~/Study/kmsunmin.github.io/_posts/'
-    \},
 \]
 
 let g:startify_list_order = [
