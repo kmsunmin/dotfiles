@@ -160,13 +160,6 @@ function gitPrompt {
     else
         branch="`git branch | grep '^\*' | cut -c 3-`"
         branch_str="\033[1;032m$branch\033[0m"
-        if [ -z ${VIRTUAL_ENV} ]; then
-            virtualenv=""
-            virtualenv_str=""
-        else
-            virtualenv="`basename $VIRTUAL_ENV`"
-            virtualenv_str="(\033[1;031m$virtualenv\033[0m)"
-        fi
 
         stat=`git s \
             | awk '{print $1}' \
