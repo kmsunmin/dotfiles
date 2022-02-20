@@ -28,7 +28,15 @@ call plug#begin('~/.vim/plugged')
     Plug 'flazz/vim-colorschemes'
     " vim plugin for git
     Plug 'tpope/vim-fugitive'
-    call plug#end()
+call plug#end()
+
+function InstallCocPlugins()
+    CocInstall coc-pyright
+    CocInstall coc-eslint
+    CocInstall coc-json
+    CocInstall coc-prettier
+    CocInstsall coc-yaml
+endfunction
 
 " theme
 syntax enable
