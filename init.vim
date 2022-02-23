@@ -1,5 +1,5 @@
 call plug#begin('~/.vim/plugged')
-    " to search files 
+    " to search files
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
         Plug 'junegunn/fzf.vim'
     " color scheme
@@ -28,14 +28,26 @@ call plug#begin('~/.vim/plugged')
     Plug 'flazz/vim-colorschemes'
     " vim plugin for git
     Plug 'tpope/vim-fugitive'
+    " copilot
+    Plug 'github/copilot.vim'
+    " airline
+    Plug 'vim-airline/vim-airline'
+    " comment things out
+    Plug 'tpope/vim-commentary'
+    " rainbow braces
+    Plug 'luochen1990/rainbow'
+        " Rainbow braces enabled
+        let g:rainbow_active = 1
+    " a class outline viewer
+    Plug 'preservim/tagbar'
+    " Autogenerate tags
+    Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 function InstallCocPlugins()
     CocInstall coc-pyright
     CocInstall coc-eslint
-    CocInstall coc-json
     CocInstall coc-prettier
-    CocInstsall coc-yaml
 endfunction
 
 " theme
@@ -45,6 +57,7 @@ filetype plugin indent on " Put your non-Plugin stuff after this line
 " set ------------------------------------------------------------------
 set conceallevel=0
 set nocompatible " Use only functions from vim, not vi
+set encoding=UTF-8
 set mouse=a
 set hidden " Buffer should still exist if window is closed
 set smartcase ignorecase hlsearch incsearch
@@ -56,7 +69,7 @@ set laststatus=2    " status bar always on
 set cursorline      " highlight current line
 set showmatch       " display matching brackets
 set background=dark
-colorscheme wombat
+colorscheme gruvbox
 
 " no swp, backup files
 set noswapfile
@@ -107,26 +120,100 @@ let g:AutoPairsShortcutBackInsert = ''
 
 " Vimwiki setting
 let g:vimwiki_list = [
+    \{
+    \    'path': '~/Learn/kmsunmin.github.io/_posts',
+    \    'ext': '.md',
+    \},
+    \{
+    \    'path': '~/Learn/kmsunmin.github.io-com/_posts',
+    \    'ext': '.md',
+    \},
+    \{
+    \    'path': '~/Documents/SC/paseem',
+    \    'syntax': 'markdown', 'ext': '.md',
+    \},
+    \{
+    \    'path': '~/Learn/til-sc',
+    \    'syntax': 'markdown', 'ext': '.md',
+    \},
+    \{
+    \    'path': '~/Documents/notes',
+    \    'ext': '.md',
+    \},
 \]
 let g:vimwiki_conceallevel = 0
 " To not recognize other markdown files as vimwiki files
 let g:vimwiki_global_ext = 0
 
+" To auto-generate templates for md files
+" reference: JohnGrib's dotfiles
+function! WikiNewTemplate()
+    let l:wiki_directory = v:false
+    for wiki in g:vimwiki_list
+        if expand('%:p:h') =~ expand(wiki.path)
+            let l:wiki_directory = v:true
+            break
+        endif
+    endfor
+    
+    if !l:wiki_directory
+        return
+    endif
+
+    if line("$") > 1
+        return
+    endif
+    
+    let l:template = []
+    call add(l:template, '---')
+    call add(l:template, 'layout    : post')
+    call add(l:template, 'title     : ')
+    call add(l:template, 'summary   : ')
+    call add(l:template, 'date      : ' . strftime('%Y-%m-%d %H:%M:%S -0500'))
+    call add(l:template, 'updated   : ' . strftime('%Y-%m-%d %H:%M:%S -0500'))
+    call add(l:template, 'tags      : ')
+    call add(l:template, 'toc       : true')
+    call add(l:template, 'public    : true')
+    call add(l:template, 'parent    : ')
+    call add(l:template, 'latex     : false')
+    call add(l:template, '---')
+    call add(l:template, '* TOC')
+    call add(l:template, '{:toc}')
+    call add(l:template, '')
+    call add(l:template, '## ')
+    call setline(1, l:template)
+    execute 'normal! G'
+    execute 'normal! $'
+
+    echom 'new wiki page has been created'
+endfunction
+
+" register auto-generation of templates to autocmd so that
+" the function gets called automatically
+autocmd BufRead,BufNewFile *.md call WikiNewTemplate()
+
 " vim-startify setting
 let g:startify_bookmarks = [
+    \{
+    \'n': '~/Documents/notes/_posts',
+    \},
+    \{
+    \'p': '~/Develop/management_command_system',
+    \},
+    \{
+    \'s': '~/Develop/sdelements/sigma',
+    \}
 \]
 
 let g:startify_list_order = [
     \ [' Bookmarks'],
     \ 'bookmarks',
-    \ ['  Most Recently Used Files'],
-    \ 'files'
 \]
 
-" NERDTree mappings 
+" NERDTree mappings
 nnoremap <Leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+" nnoremap <C-t> :NERDTreeToggle<CR>
 
 " map keys to use fzf and Rg faster
 nnoremap <silent> <C-f> :Files<CR>
@@ -137,3 +224,8 @@ nnoremap <esc><esc> :noh<return><esc>
 nnoremap <Leader>ev :vsplit<space>~/.config/nvim/init.vim<CR>
 " source init.vim
 nnoremap <Leader>sv :source $MYVIMRC<CR>
+
+" toggle tagbar
+nnoremap <Leader>tt :TagbarToggle<CR>
+let g:tagbar_width=40
+let g:tagbar_sort=0
