@@ -26,6 +26,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'jiangmiao/auto-pairs'
     " colorschemes
     Plug 'flazz/vim-colorschemes'
+    Plug 'arcticicestudio/nord-vim'
+    Plug 'NLKNguyen/papercolor-theme'
     " vim plugin for git
     Plug 'tpope/vim-fugitive'
     " copilot
@@ -42,6 +44,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'preservim/tagbar'
     " Autogenerate tags
     Plug 'ludovicchabant/vim-gutentags'
+    " Status and tabline
+    Plug 'vim-airline/vim-airline'
 call plug#end()
 
 function InstallCocPlugins()
@@ -61,6 +65,7 @@ set encoding=UTF-8
 set mouse=a
 set hidden " Buffer should still exist if window is closed
 set smartcase ignorecase hlsearch incsearch
+set noshowmode " hide mode since vim-airline covers it
 
 " display
 set nu              " line number
@@ -69,7 +74,7 @@ set laststatus=2    " status bar always on
 set cursorline      " highlight current line
 set showmatch       " display matching brackets
 set background=dark
-colorscheme gruvbox
+colorscheme PaperColor
 
 " no swp, backup files
 set noswapfile
@@ -104,6 +109,9 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_auto_loc_list = 0
+
+" automatically display all buffers when there is only one tab open
+let g:airline#extensions#tabline#enabled = 1
 
 " set up grepprg so :grep uses ripgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
@@ -155,7 +163,7 @@ function! WikiNewTemplate()
             break
         endif
     endfor
-    
+
     if !l:wiki_directory
         return
     endif
@@ -163,7 +171,7 @@ function! WikiNewTemplate()
     if line("$") > 1
         return
     endif
-    
+
     let l:template = []
     call add(l:template, '---')
     call add(l:template, 'layout    : post')
@@ -175,6 +183,7 @@ function! WikiNewTemplate()
     call add(l:template, 'toc       : true')
     call add(l:template, 'public    : true')
     call add(l:template, 'parent    : ')
+    call add(l:template, 'daily     : ')
     call add(l:template, 'latex     : false')
     call add(l:template, '---')
     call add(l:template, '* TOC')
@@ -212,7 +221,7 @@ let g:startify_list_order = [
 
 " NERDTree mappings
 nnoremap <Leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 " nnoremap <C-t> :NERDTreeToggle<CR>
 
 " map keys to use fzf and Rg faster
