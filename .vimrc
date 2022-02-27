@@ -53,14 +53,6 @@ let g:AutoPairsShortcutBackInsert = ''
 
 " Vimwiki setting
 let g:vimwiki_list = [
-    \{
-    \    'path': '~/Study/kmsunmin.github.io/_wiki/',
-    \    'syntax': 'markdown', 'ext': '.md',
-    \},
-    \{
-    \    'path': '~/Documents/personal_wiki',
-    \    'ext': '.md',
-    \},
 \]
 let g:vimwiki_conceallevel = 0
 " To not recognize other markdown files as vimwiki files
@@ -75,9 +67,6 @@ let g:tex_conceal='abdmg'
 
 " vim-startify setting
 let g:startify_bookmarks = [
-    \{
-    \'w': '~/Study/kmsunmin.github.io/_wiki'
-    \},
 \]
 
 " Setup grepprg so :grep uses ripgrep
