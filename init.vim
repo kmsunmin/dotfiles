@@ -128,26 +128,6 @@ let g:AutoPairsShortcutBackInsert = ''
 
 " Vimwiki setting
 let g:vimwiki_list = [
-    \{
-    \    'path': '~/Learn/kmsunmin.github.io/_posts',
-    \    'ext': '.md',
-    \},
-    \{
-    \    'path': '~/Learn/kmsunmin.github.io-com/_posts',
-    \    'ext': '.md',
-    \},
-    \{
-    \    'path': '~/Documents/SC/paseem',
-    \    'syntax': 'markdown', 'ext': '.md',
-    \},
-    \{
-    \    'path': '~/Learn/til-sc',
-    \    'syntax': 'markdown', 'ext': '.md',
-    \},
-    \{
-    \    'path': '~/Documents/notes',
-    \    'ext': '.md',
-    \},
 \]
 let g:vimwiki_conceallevel = 0
 " To not recognize other markdown files as vimwiki files
@@ -203,15 +183,6 @@ autocmd BufRead,BufNewFile *.md call WikiNewTemplate()
 
 " vim-startify setting
 let g:startify_bookmarks = [
-    \{
-    \'n': '~/Documents/notes/_posts',
-    \},
-    \{
-    \'p': '~/Develop/management_command_system',
-    \},
-    \{
-    \'s': '~/Develop/sdelements/sigma',
-    \}
 \]
 
 let g:startify_list_order = [

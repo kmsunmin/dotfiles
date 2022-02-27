@@ -1,0 +1,24 @@
+; [user]
+;	email = kmsunmin@gmail.com
+;	name = Sunmin Kim
+; [submodule]
+;	recurse = true
+[alias]
+    ps = push
+    pl = pull 
+    ci = commit
+    co = checkout
+    sw = switch
+    s = status -s
+    ll = "log \
+         --color --graph --decorate \
+         --date=format:'%Y-%m-%d' \
+         --abbrev-commit \
+         --pretty=format:'%C(red)%h%C(auto)%d %s %C(green)(%cr)%C(bold blue) %an'"
+    b = branch
+    ss = stash
+    ss-s = stash show
+    ss-p = stash pop
+    ss-l = stash list
+[core]
+    editor = /usr/bin/nvim
