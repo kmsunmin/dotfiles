@@ -42,10 +42,14 @@ call plug#begin('~/.vim/plugged')
         let g:rainbow_active = 1
     " a class outline viewer
     Plug 'preservim/tagbar'
-    " Autogenerate tags
+    " autogenerate tags
     Plug 'ludovicchabant/vim-gutentags'
-    " Status and tabline
+    " status and tabline
     Plug 'vim-airline/vim-airline'
+    " gherkin cucumber
+    Plug 'Gee19/coc-cucumber', {'do': 'yarn install --frozen-lockfile'}
+    " language packs
+    Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 function InstallCocPlugins()
@@ -74,7 +78,7 @@ set laststatus=2    " status bar always on
 set cursorline      " highlight current line
 set showmatch       " display matching brackets
 set background=dark
-colorscheme PaperColor
+colorscheme ayu
 
 " no swp, backup files
 set noswapfile
