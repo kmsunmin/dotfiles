@@ -213,3 +213,10 @@ nnoremap <Leader>sv :source $MYVIMRC<CR>
 nnoremap <Leader>tt :TagbarToggle<CR>
 let g:tagbar_width=40
 let g:tagbar_sort=0
+
+" vim-spector debugger config
+" let g:vimspector_enable_mappings = 'HUMAN'
+" packadd! vimspector
+
+" copy text from vim to the system clipboard
+vnoremap <Leader>y "+y
