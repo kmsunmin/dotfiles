@@ -25,17 +25,35 @@ call plug#begin('~/.vim/plugged')
     " auto pairing
     Plug 'jiangmiao/auto-pairs'
     " colorschemes
-    Plug 'flazz/vim-colorschemes'
     Plug 'arcticicestudio/nord-vim'
     Plug 'NLKNguyen/papercolor-theme'
+    Plug 'tomasiser/vim-code-dark'
+    Plug 'w0ng/vim-hybrid'
+    Plug 'jacoborus/tender'
+    Plug 'morhetz/gruvbox'
+    Plug 'ayu-theme/ayu-vim'
+    Plug 'joshdick/onedark.vim'
+    Plug 'junegunn/seoul256.vim'
+    Plug 'altercation/solarized'
+    Plug 'tomasr/molokai'
+    Plug 'dracula/vim', {'as': 'dracula'}
+    Plug 'chriskempson/base16-vim'
+    Plug 'sonph/onehalf', {'rtp': 'vim/'}
+    Plug 'johngrib/FlatColor-johngrib'
+    " displays icons
+    " Plug 'ryanoasis/vim-devicons'
     " vim plugin for git
     Plug 'tpope/vim-fugitive'
+    " shows a git diff in number line
+    Plug 'airblade/vim-gitgutter'
     " copilot
     Plug 'github/copilot.vim'
     " airline
     Plug 'vim-airline/vim-airline'
     " comment things out
     Plug 'tpope/vim-commentary'
+    " for easier brackets, parantheses, quotes, etc.
+    Plug 'tpope/vim-surround'
     " rainbow braces
     Plug 'luochen1990/rainbow'
         " Rainbow braces enabled
@@ -78,7 +96,8 @@ set laststatus=2    " status bar always on
 set cursorline      " highlight current line
 set showmatch       " display matching brackets
 set background=dark
-colorscheme ayu
+let g:seoul256_background = 233
+colorscheme seoul256
 
 " no swp, backup files
 set noswapfile
@@ -116,6 +135,8 @@ let g:syntastic_auto_loc_list = 0
 
 " automatically display all buffers when there is only one tab open
 let g:airline#extensions#tabline#enabled = 1
+" airline theme
+" let g:airline_theme = 'codedark'
 
 " set up grepprg so :grep uses ripgrep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
@@ -197,6 +218,7 @@ let g:startify_list_order = [
 " NERDTree mappings
 nnoremap <Leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden = 1
 " nnoremap <C-t> :NERDTreeToggle<CR>
 
 " map keys to use fzf and Rg faster
@@ -211,12 +233,8 @@ nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " toggle tagbar
 nnoremap <Leader>tt :TagbarToggle<CR>
-let g:tagbar_width=40
-let g:tagbar_sort=0
-
-" vim-spector debugger config
-" let g:vimspector_enable_mappings = 'HUMAN'
-" packadd! vimspector
+let g:tagbar_width = 40
+let g:tagbar_sort = 0
 
 " copy text from vim to the system clipboard
 vnoremap <Leader>y "+y

@@ -125,8 +125,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$PYENV_ROOT/shims:$PATH"
 
-eval "$(pyenv init --path)"
+# pyenv initialization
 eval "$(pyenv init -)"
+
+# pyenv virtual env initialization
 eval "$(pyenv virtualenv-init -)"
 
 # simulate behaviour that will be implemented in the future for pyenv-virtualenv
@@ -140,9 +142,10 @@ MAGENTA='\e[0;35m\]'
 B_MAGENTA='\e[1;35m\]'
 YELLOW='\e[0;33m\]'
 B_YELLOW='\e[1;33m\]'
-RED='\e[0;31m'
-BLUE='\e[0;34m'
-B_BLUE='\e[1;34m'
+B_RED='\e[1;31m\]'
+RED='\e[0;31m\]'
+BLUE='\e[0;34m\]'
+B_BLUE='\e[1;34m\]'
 B_CYAN='\e[1;36m\]'
 RED='\e[0;31m\]'
 WHITE='\e[1;37m\]'
@@ -155,7 +158,7 @@ function gitPrompt {
         return 1
     else
         branch="`git branch | grep '^\*' | cut -c 3-`"
-        branch_str="\033[1;032m$branch\033[0m"
+        branch_str="\033[1;031m$branch\033[0m"
 
         stat=`git s \
             | awk '{print $1}' \
@@ -164,7 +167,7 @@ function gitPrompt {
             | sed -E 's/([0-9]+) /\1/g; s/  */ /g; s/ *$//'`
 
         stash_size=`git stash list | wc -l | sed 's/ //g'`
-        stash_icon=" \e[0;92m≡\033[0m"
+        stash_icon=" \e[0;92m≡ \033[0m"
 	printf "[$branch_str]$stat$stash_icon$stash_size"
         return 0
     fi
@@ -177,7 +180,7 @@ function virtualEnvPrompt {
         virtualenv_str=""
     else
         virtualenv="`basename $VIRTUAL_ENV`"
-        virtualenv_str="(\033[1;031m$virtualenv\033[0m)"
+        virtualenv_str="(\033[1;036m$virtualenv\033[0m)"
     fi
     printf "$virtualenv_str" 
     return 0
@@ -186,9 +189,9 @@ function virtualEnvPrompt {
 # Bash Prompt
 export PS1="${B_YELLOW}\$(date '+%Y-%m-%d-%a') \
 ${B_YELLOW}\$(date +%T) \
-${GREEN}\u \
+${WHITE}\u \
 ${WHITE}\h \
-${B_CYAN}\w \
+${B_GREEN}\w \
 ${COLOR_END}\
 \$(gitPrompt) \
 \$(virtualEnvPrompt)\n\$ "
