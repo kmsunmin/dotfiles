@@ -68,7 +68,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'Gee19/coc-cucumber', {'do': 'yarn install --frozen-lockfile'}
     " language packs
     Plug 'sheerun/vim-polyglot'
-call plug#end()
+    " Vim game
+    Plug 'johngrib/vim-game-code-break'
+    call plug#end()
 
 function InstallCocPlugins()
     CocInstall coc-pyright
@@ -88,6 +90,7 @@ set mouse=a
 set hidden " Buffer should still exist if window is closed
 set smartcase ignorecase hlsearch incsearch
 set noshowmode " hide mode since vim-airline covers it
+set nomodeline
 
 " display
 set nu              " line number
@@ -202,9 +205,24 @@ function! WikiNewTemplate()
     echom 'new wiki page has been created'
 endfunction
 
+
 " register auto-generation of templates to autocmd so that
 " the function gets called automatically
 autocmd BufRead,BufNewFile *.md call WikiNewTemplate()
+
+" method to update last modified date of post
+" reference: JohnGrib's dotfiles
+function! LastModified()
+    if &modified
+        let save_cursor = getpos(".")
+        let n = min([10, line("$")])
+        keepjumps exe '1,' . n . 's#^\(.\{,10}updated\s*: \).*#\1' .
+            \ strftime('%Y-%m-%d %H:%M:%S -0500') . '#e'
+        call histdel('search', -1)
+        call setpos('.', save_cursor)
+    endif
+endfun
+autocmd BufWritePre *.md call LastModified()
 
 " vim-startify setting
 let g:startify_bookmarks = [
@@ -213,6 +231,8 @@ let g:startify_bookmarks = [
 let g:startify_list_order = [
     \ [' Bookmarks'],
     \ 'bookmarks',
+    \ [' Commands'],
+    \ 'commands'
 \]
 
 " NERDTree mappings
@@ -223,8 +243,26 @@ let NERDTreeShowHidden = 1
 
 " map keys to use fzf and Rg faster
 nnoremap <silent> <C-f> :Files<CR>
-nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <C-b> :Buffers<CR>
+nnoremap <silent> <C-h> :History<CR>
+nnoremap <silent> <Leader>f :RG<CR>
 nnoremap <esc><esc> :noh<return><esc>
+
+" fzf window location
+let g:fzf_layout = { 'down': '~30%' }
+let g:fzf_preview_window = ['right:50%:', 'ctrl-/']
+
+
+" Advanced ripgrep integration
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " edit init.vim
 nnoremap <Leader>ev :vsplit<space>~/.config/nvim/init.vim<CR>
@@ -238,3 +276,9 @@ let g:tagbar_sort = 0
 
 " copy text from vim to the system clipboard
 vnoremap <Leader>y "+y
+
+
+" manage buffers
+nnoremap <silent> <PageUp> :bnext!<CR>
+nnoremap <silent> <PageDown> :bprevious!<CR>
+
