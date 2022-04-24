@@ -40,6 +40,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'chriskempson/base16-vim'
     Plug 'sonph/onehalf', {'rtp': 'vim/'}
     Plug 'johngrib/FlatColor-johngrib'
+    Plug 'yuttie/hydrangea-vim'
+    Plug 'tyrannicaltoucan/vim-deep-space'
     " displays icons
     " Plug 'ryanoasis/vim-devicons'
     " vim plugin for git
@@ -68,9 +70,16 @@ call plug#begin('~/.vim/plugged')
     Plug 'Gee19/coc-cucumber', {'do': 'yarn install --frozen-lockfile'}
     " language packs
     Plug 'sheerun/vim-polyglot'
+    " Plug 'tpope/vim-cucumber' 
     " Vim game
     Plug 'johngrib/vim-game-code-break'
-    call plug#end()
+    " minimap for Vim 
+    " Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
+    " indent line
+    Plug 'Yggdroot/indentLine'
+    " support for Golang
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+call plug#end()
 
 function InstallCocPlugins()
     CocInstall coc-pyright
@@ -91,6 +100,7 @@ set hidden " Buffer should still exist if window is closed
 set smartcase ignorecase hlsearch incsearch
 set noshowmode " hide mode since vim-airline covers it
 set nomodeline
+set colorcolumn=79
 
 " display
 set nu              " line number
@@ -98,9 +108,12 @@ set ruler           " coordinate of current cursor position
 set laststatus=2    " status bar always on
 set cursorline      " highlight current line
 set showmatch       " display matching brackets
+set termguicolors
 set background=dark
 let g:seoul256_background = 233
-colorscheme seoul256
+let ayucolor = 'dark'
+colorscheme ayu "seoul256 ayu PaperColor seoul256 
+highlight ColorColumn guibg=green
 
 " no swp, backup files
 set noswapfile
@@ -134,7 +147,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = { 'mode': 'passive' }
-let g:syntastic_auto_loc_list = 0
 
 " automatically display all buffers when there is only one tab open
 let g:airline#extensions#tabline#enabled = 1
@@ -205,13 +217,10 @@ function! WikiNewTemplate()
     echom 'new wiki page has been created'
 endfunction
 
-
 " register auto-generation of templates to autocmd so that
 " the function gets called automatically
 autocmd BufRead,BufNewFile *.md call WikiNewTemplate()
 
-" method to update last modified date of post
-" reference: JohnGrib's dotfiles
 function! LastModified()
     if &modified
         let save_cursor = getpos(".")
@@ -229,10 +238,6 @@ let g:startify_bookmarks = [
 \]
 
 let g:startify_list_order = [
-    \ [' Bookmarks'],
-    \ 'bookmarks',
-    \ [' Commands'],
-    \ 'commands'
 \]
 
 " NERDTree mappings
@@ -245,7 +250,7 @@ let NERDTreeShowHidden = 1
 nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <C-b> :Buffers<CR>
 nnoremap <silent> <C-h> :History<CR>
-nnoremap <silent> <Leader>f :RG<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <esc><esc> :noh<return><esc>
 
 " fzf window location
@@ -254,15 +259,15 @@ let g:fzf_preview_window = ['right:50%:', 'ctrl-/']
 
 
 " Advanced ripgrep integration
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
+" function! RipgrepFzf(query, fullscreen)
+"   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+"   let initial_command = printf(command_fmt, shellescape(a:query))
+"   let reload_command = printf(command_fmt, '{q}')
+"   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+"   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+" endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+" command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " edit init.vim
 nnoremap <Leader>ev :vsplit<space>~/.config/nvim/init.vim<CR>
@@ -281,4 +286,70 @@ vnoremap <Leader>y "+y
 " manage buffers
 nnoremap <silent> <PageUp> :bnext!<CR>
 nnoremap <silent> <PageDown> :bprevious!<CR>
+
+" minimap configuration
+" let g:minimap_width = 10
+" let g:minimap_auto_start = 1
+" let g:minimap_auto_start_win_enter = 1
+
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
+
+let g:syntastic_go_checkers = ['golint', 'govet', 'golangci-lint']
+" let g:syntastic_go_gometalinter_args = ['--disable-all', '--enable=errcheck']
+let g:syntastic_go_gometalinter_args = ['--enable=errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+" disable all linters as that is taken care of by coc.nvim
+let g:go_diagnostics_enabled = 2 
+let g:go_metalinter_enabled = []
+
+" don't jump to errors after metalinter is invoked
+let g:go_jump_to_error = 1 
+
+" run go imports on file save
+let g:go_fmt_command = "gopls"
+let g:go_metalinter_autosave = 1
+let g:go_mod_fmt_autosave = 1
+" automatically highlight variable your cursor is on
+let g:go_auto_sameids = 0 
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_array_whitespace_error =1
+let g:go_highlight_trailing_whitespace_error = 1
+let g:go_highlight_string_spellcheck = 1
+let g:go_highlight_diagnostic_warnings = 1
+let g:go_highlight_diagnostic_errors = 1
 
