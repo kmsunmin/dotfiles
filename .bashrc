@@ -153,13 +153,35 @@ COLOR_END='\[\033[0m\]'
 
 # Prompt for Git------------------------------------------------------------------
 function gitPrompt {
+    # 2> /dev/null: redirect stderr to null space (black hole)
+    # 1> /dev/null: redirect stdout to null space (black hole)
     git status --short 2> /dev/null 1> /dev/null
+    # $?: exit code of the previous process
+    # exit code 0: everything is OK
+    # exit code 1: minor problem/warnings
+    # exit code 2: fatal error
     if [ "$?" -ne "0" ]; then
         return 1
     else
+        # grep '^\*': search for branch name that starts with *
+        # cut -c 3-: cut line at position 3 until the end (removing '* ')
         branch="`git branch | grep '^\*' | cut -c 3-`"
+        # \033: an escape character in octal form
+        # [1;031m]: colour red
+        # [0m: reset the colour
         branch_str="\033[1;031m$branch\033[0m"
 
+        # awk: a scripting language mostly used for pattern scanning and processing
+        #      for each line of a document
+        # awk '{print $1}': print the 1st field of the line given
+        #  - status of each file in git (modified, added, deleted, etc)
+        # uniq -c: count repeated lines and display a number as a prefix with the line
+        # tr: translate new line characters with empty space
+        # sed: process/edit one line at a time
+        # - flag r: extended regex pattern
+        # - 1: 's/([0-9])+ /\1/g': replace one or more numeric characters to first group
+        # - 2: s/  */ /g: replace the empty spaces to single space
+        # - 3: s/ *$//g: replace to lingering empty spaces to none
         stat=`git s \
             | awk '{print $1}' \
             | sort | uniq -c \
